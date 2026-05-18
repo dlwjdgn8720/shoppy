@@ -1,14 +1,19 @@
 import { useState, useEffect } from 'react';
 import ItemContent from '@/components/commons/ItemContent.jsx';
+import { axiosGet } from '../../utils/dataFetch.js'
 
 export default function QnA({ pid }) {
   const [qnaData, setQnaData] = useState([]);
 
   useEffect(() => {
     const fetchQna = async () => {
-      const res = await fetch('/data/productQnA.json');
-      const all = await res.json();
-      setQnaData(all.filter(item => String(item.pid) === String(pid)));
+      // const res = await fetch('/data/productQnA.json');
+      const res = await axiosGet(`/products/qna/${pid}`);
+      console.log('data ::', res);      
+      setQnaData(res);
+      // const all = await res.json();
+      // setQnaData(res.filter(item => String(item.pid) === String(pid)));
+
     };
     fetchQna();
   }, [pid]);

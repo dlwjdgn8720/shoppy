@@ -9,8 +9,8 @@ export function ImageList({imgList, className}) {
             {imgList && imgList.map((img, idx) =>
                 <li key={idx}>
                     {classType === 'review'?
-                    <img src= {img} />
-                    : <img src={img} /> }
+                    <img src= {`${img}`} />
+                    : <img src={`/images/${img}`} /> }
                 </li>
             )}
         </ul>

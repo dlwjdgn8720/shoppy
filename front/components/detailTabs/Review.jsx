@@ -1,32 +1,11 @@
-// 
-// import { StarRating } from '@/components/commons/StarRating.jsx';
-// import { ImageList } from '@/components/commons/ImageList.jsx';
-// import { LikeItem } from '@/components/commons/LikeItem.jsx';
-// import { FaRegCircleQuestion } from 'react-icons/fa6'
-//
-// /**
-//  * ProductDetail > Review
-//  */
-// export default async function Review() {
-//     const reviewData = await axiosData("/data/productReview.json");
-//
-//     return (
-//         <div>
-//             <ReviewTop data={reviewData} />
-//             <ReviewList />
-//         </div>
-//     );
-// }
 
 "use client";
-
 import { useState, useEffect } from "react";
-
 import { StarRating } from '@/components/commons/StarRating.jsx';
 import { ImageList } from '@/components/commons/ImageList.jsx';
 import { LikeItem } from '@/components/commons/LikeItem.jsx';
 import { FaRegCircleQuestion } from 'react-icons/fa6';
-
+import { axiosGet, axiosData } from '../../utils/dataFetch.js'
 /**
  * ProductDetail > Review
  */
@@ -38,7 +17,7 @@ export default function Review() {
         const fetchReviewData = async () => {
             try {
                 setIsLoading(true);
-                // JSON 파일 혹은 API 호출
+                // const data = await axiosGet("/products/review");
                 const data = await axiosData("/data/productReview.json");
                 setReviewData(data);
             } catch (error) {
@@ -69,29 +48,29 @@ export default function Review() {
 export function ReviewTop({ data }) {
     return (
         <div className='review-top'>
-            <div style={{paddingTop:"20px"}}></div>
+            <div style={{ paddingTop: "20px" }}></div>
             <h3>상품 만족도(569)</h3>
             <ul className='review-top-list'>
                 <li>
                     <div>
                         <p className='review-top-text'>
-                          구매하신 분들의 상품에 대한 평점입니다.  
+                            구매하신 분들의 상품에 대한 평점입니다.
                         </p>
                         <StarRating totalRate={3.6}
-                                    style="star-black-big" />
+                            style="star-black-big" />
                     </div>
                 </li>
-                { data.topList && data.topList.map((item, idx) =>
+                {data.topList && data.topList.map((item, idx) =>
                     <li key={idx}>
                         <ReviewType title={item.title}
-                                    names={item.names}
-                                    values={item.values}
+                            names={item.names}
+                            values={item.values}
                         />
                     </li>
                 )}
             </ul>
-            <ImageList  imgList={data.topImgList}
-                        className="review-top-imglist" />
+            <ImageList imgList={data.topImgList}
+                className="review-top-imglist" />
         </div>
     );
 }
@@ -99,18 +78,18 @@ export function ReviewTop({ data }) {
 /**
  * ProductDetail > Review > ReviewTop > ReviewType
  */
-export function ReviewType({title, names, values}) {
+export function ReviewType({ title, names, values }) {
     return (
         <div className='review-type'>
             <p className='review-type text'>{title}</p>
-            {names && names.map((name, idx) => 
+            {names && names.map((name, idx) =>
                 <div className="bar-metadata" key={idx}>
                     <span className="bar-text1">{name}</span>
                     <div className="bar-bg">
-                    <div
-                        className="bar-value"
-                        style={{ width: `${values[idx]}%` }}
-                    ></div>
+                        <div
+                            className="bar-value"
+                            style={{ width: `${values[idx]}%` }}
+                        ></div>
                     </div>
                     <span className="bar-text2">{values[idx]}%</span>
                 </div>
@@ -137,21 +116,21 @@ export function ReviewList() {
                     <tr>
                         <td className='review-list-star'>
                             <StarRating totalRate={3.4}
-                                        style="start-black-review" />
+                                style="start-black-review" />
                         </td>
                         <td> <ReviewListItem /> </td>
                     </tr>
                     <tr>
                         <td className='review-list-star'>
                             <StarRating totalRate={4.4}
-                                        style="start-black-review" />
+                                style="start-black-review" />
                         </td>
                         <td> <ReviewListItem /> </td>
                     </tr>
                     <tr>
                         <td className='review-list-star'>
                             <StarRating totalRate={4.8}
-                                        style="start-black-review" />
+                                style="start-black-review" />
                         </td>
                         <td> <ReviewListItem /> </td>
                     </tr>
@@ -217,15 +196,15 @@ export function ReviewListItem() {
             <div className='product_review_reaction'>
                 <div className='btn_report_item'>
                     <button type='button'
-                            className='btn_report_item link_txt'
+                        className='btn_report_item link_txt'
                     ><span>신고</span></button>
                     <button type='button'
-                            className='btn_report_item link_txt'
+                        className='btn_report_item link_txt'
                     ><span>숨김</span></button>
                 </div>
                 <LikeItem style="review-like"
-                          icons="tb"
-                          value="0" />                
+                    icons="tb"
+                    value="0" />
             </div>
         </div>
     );

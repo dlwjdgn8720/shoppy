@@ -1,23 +1,52 @@
-import pool from '../db/connection.js';
+import pool from '../db/connection.js'
+
+/** 
+ *  상품 Qna 조회 
+ */
+export const getQna = async(pid) => {
+    const sql = `
+    select 	qid,
+            title,
+            content,
+            is_complete as isComplete,
+            is_lock as isLock,
+            id,
+            pid,
+            cdate
+        from product_qna 
+        where pid = 1;`;
+    const[results] = await pool.execute(sql, [pid]);
+    return results;
+}
+
+
+// export const getProductReview = async() => {
+//     const sql = ``;
+
+//     const [results] = await pool.execute(sql, []);
+//     return results;
+// }
 
 /**
  * 상품 상세정보 조회
  */
 export const getProduct = async(pid) => {
     const sql = `
-        select  pid,
-            name,
-            price,
-            info,
-            rate,
-            concat('/images/', image) as image,
-            img_list as imgList
-        from product where pid = ?
-    `;
+        select  p.pid,
+		p.name,
+        p.price,
+        p.info,
+        p.rate,
+        concat('images/', p.image) as image,
+        p.img_list as imgList,
+        json_object("title_en", pd.title_en,
+					"title_ko", pd.title_ko,
+					"list", pd.list) as detailInfo		
+        from product p, product_detailinfo pd 
+        where p.pid = pd.pid and p.pid = ?;`
     const [result] = await pool.execute(sql, [pid]);
     return result[0];   
 }
-
 
 /**
  * 전체 상품 조회

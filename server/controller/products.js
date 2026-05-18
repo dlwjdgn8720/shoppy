@@ -1,5 +1,23 @@
 import * as repository from '../repository/products.js';
 
+/** 
+ *  상품 Qna
+ */
+export const getQna = async(req, res, next) => {
+    const qna = await repository.getQna(req.params.pid);
+    res.json(qna);
+}
+
+/**
+ * 상품 상제 정보 조회 > 리뷰
+ */
+export const getProductReview = async(req, res, next) => {
+    console.log("상품리뷰 컨트롤러");
+    
+    // const result = await repository.getProductReview();
+    res.json({});    
+}
+
 /**
  * 상품 상세 정보 조회
  */
@@ -15,3 +33,4 @@ export const getAll = async(req, res, next) => {
     const products = await repository.getAll();
     res.json(products);   // {"data": products}
 }
+

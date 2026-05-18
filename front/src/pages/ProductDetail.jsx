@@ -9,18 +9,19 @@ import Review from '@/components/detailTabs/Review.jsx';
 import QnA from '@/components/detailTabs/QnA.jsx';
 import Return from '@/components/detailTabs/Return.jsx';
 import PurchaseActions from '@/components/product/PurchaseActions.jsx';
+import { axiosGet } from '@/utils/dataFetch.js';
 
 export default function ProductDetail() {
   const { pid } = useParams();
   const [product, setProduct] = useState(null);
   const [tabName, setTabName] = useState('detail');
-
+  
   useEffect(() => {
     const fetchProduct = async () => {
-      const res = await fetch('/data/products.json');
-      const list = await res.json();
-      const found = list.find(p => String(p.pid) === String(pid));
-      setProduct(found ?? null);
+      const product = await axiosGet(`/products/${pid}`);
+      // console.log("product :::", product);
+      
+      setProduct(product);
     };
     fetchProduct();
   }, [pid]);
@@ -34,7 +35,8 @@ export default function ProductDetail() {
       <div className="product-detail-top">
         <div className="product-detail-image-top">
           <img src={product.image} alt={product.name} />
-          <ImageList className="product-detail-image-top-list" imgList={imgList} />
+          <ImageList className="product-detail-image-top-list" 
+                    imgList={imgList} />
         </div>
         <ul className="product-detail-info-top">
           <li className="product-detail-title">{product.name}</li>
