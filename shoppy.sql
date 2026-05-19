@@ -50,6 +50,21 @@ from product_return;
 
 select * from member order by mdate desc;
 
+-- 중복된 아이디 체크
+select * from member;
+select count(id) from member where id = 'test222';
+
+select * from cart;
+
+
+
+
+
+
+
+
+
+
 
 
 
