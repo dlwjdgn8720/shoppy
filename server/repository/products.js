@@ -37,7 +37,7 @@ export const getProduct = async(pid) => {
         p.price,
         p.info,
         p.rate,
-        concat('images/', p.image) as image,
+        concat('/images/', p.image) as image,
         p.img_list as imgList,
         json_object("title_en", pd.title_en,
 					"title_ko", pd.title_ko,

@@ -54,7 +54,41 @@ select * from member order by mdate desc;
 select * from member;
 select count(id) from member where id = 'test222';
 
-select * from cart;
+select * from cart
+	where pid = 1 and id = 'test' and size = 'XS';
+
+select * from cart
+	where id = 'test'
+	order by cdate desc;
+
+select sum(qty) as qty from cart where id = 'test';
+show tables;
+
+select * from view_cartlist where id = 'test';
+select * from information_schema.views
+	where table_schema = 'shoppy';
+
+select  `m`.`id` AS `id`,
+		`m`.`name` AS `mname`,
+        `m`.`phone` AS `phone`,
+        `m`.`email` AS `email`,
+        `p`.`pid` AS `pid`,
+        `p`.`name` AS `name`,
+        `p`.`info` AS `info`,
+        `p`.`image` AS `image`,
+        `p`.`price` AS `price`,
+        `c`.`size` AS `size`,
+        `c`.`qty` AS `qty`,
+        `c`.`cid` AS `cid`,
+        `t`.`total_price` AS `total_price` 
+        from (((`shoppy`.`member` `m` join `shoppy`.`product` `p`) 
+        join `shoppy`.`cart` `c`) 
+        join (select `c`.`id` AS `id`,sum((`c`.`qty` * `p`.`price`)) AS `total_price` 
+				from (`shoppy`.`cart` `c` 
+                join `shoppy`.`product` `p` on((`c`.`pid` = `p`.`pid`))) 
+                group by `c`.`id`) `t`) 
+                where ((`m`.`id` = `c`.`id`) and (`p`.`pid` = `c`.`pid`) and (`c`.`id` = `t`.`id`))
+    
 
 
 
