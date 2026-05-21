@@ -1,4 +1,4 @@
-import axios from 'axios';  //fetch 함수와 동일, res.json()
+import axios from "axios"; //fetch 함수와 동일, res.json()
 
 /**
  * 배열을 n개씩 묶어 2차원 배열로 반환
@@ -28,10 +28,22 @@ export const axiosGet = async (path) => {
   //console.log(url);
   const res = await axios.get(url);
   return res.data;
-}
+};
 
 export const axiosPost = async (path, data) => {
   const url = `http://localhost:9000${path}`;
   const res = await axios.post(url, data);
   return res.data;
-}
+};
+
+export const axiosPut = async (path, data) => {
+  const url = `http://localhost:9000${path}`; //body
+  const res = await axios.put(url, data);
+  return res.data;
+};
+
+export const axiosDelete = async (path, data) => {
+  const url = `http://localhost:9000${path}`; //url
+  const res = await axios.delete(url, { data: data }); //get, delete -> config 객체에 담아서 전송
+  return res.data;
+};

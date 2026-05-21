@@ -87,8 +87,8 @@ select  `m`.`id` AS `id`,
 				from (`shoppy`.`cart` `c` 
                 join `shoppy`.`product` `p` on((`c`.`pid` = `p`.`pid`))) 
                 group by `c`.`id`) `t`) 
-                where ((`m`.`id` = `c`.`id`) and (`p`.`pid` = `c`.`pid`) and (`c`.`id` = `t`.`id`))
-    
+                where ((`m`.`id` = `c`.`id`) and (`p`.`pid` = `c`.`pid`) and (`c`.`id` = `t`.`id`));
+    select * from cart;
 
 
 

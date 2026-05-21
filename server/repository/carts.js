@@ -1,64 +1,77 @@
-import pool from '../db/connection.js';
+import pool from "../db/connection.js";
 
-/** 
+/**
+ * 장바구니 수량 삭제
+ */
+export const getQtyDelete = async (cid) => {
+  const sql = `
+        delete from cart where cid = ?
+     `;
+  const [rows] = await pool.execute(sql, [cid]);
+  return rows;
+};
+
+/**
  * 고객별 장바구니 리스트 조회
  */
-export const getList = async(userId) => {
-    const sql = `
+export const getList = async (userId) => {
+  const sql = `
          select * from view_cartlist where id = ?
      `;
-     const [rows] = await pool.execute(sql, [userId]);
-     return rows;   
-}
+  const [rows] = await pool.execute(sql, [userId]);
+  return rows;
+};
 
-/** 
+/**
  * 장바구니 수량 조회
  */
-export const getCount = async(userId) => {
-     const sql = `
+export const getCount = async (userId) => {
+  const sql = `
          select sum(qty) as qty from cart where id = ?
      `;
-     const [rows] = await pool.execute(sql, [userId]);
-     return rows[0];   
-}
+  const [rows] = await pool.execute(sql, [userId]);
+  return rows[0];
+};
 
-/** 
+/**
  * cartItem 수량 업데이트
  */
-export const getQtyUpdate = async(cid) => {
-    const sql = `
-            update cart 
-                set qty = qty + 1
-                where cid = ?
-    `;
+export const getQtyUpdate = async (cid, type) => {
+  //console.log(cid, type);
+  const param = type === "-" ? "qty - 1" : "qty + 1";
 
-    const [rows] = await pool.execute(sql, [cid]);
-    return rows; //update, insert, delete = {affectedRows: 1 ...}
-}
+  const sql = `
+          update cart
+              set qty = ${param}
+              where cid = ?
+  `;
 
-/** 
+  const [rows] = await pool.execute(sql, [cid]);
+  return rows; //update, insert, delete = {affectedRows: 1 ...}
+};
+
+/**
  * cartItem 추가
  */
-export const getCartItemAdd = async(cartItem) => {
-    const { pid, size, qty, userId } = cartItem;
-    const sql = `   
+export const getCartItemAdd = async (cartItem) => {
+  const { pid, size, qty, userId } = cartItem;
+  const sql = `   
            insert into cart(size, qty, pid, id, cdate)
             values(?, ?, ?, ?, now()) 
     `;
 
-    const [rows] = await pool.execute(sql, [size, qty, pid, userId]);
-    return rows;
-}
+  const [rows] = await pool.execute(sql, [size, qty, pid, userId]);
+  return rows;
+};
 
-
-/** 
+/**
  * cartItem 조회
  */
 export const getFindItem = async (cartItem) => {
-    const { pid, size, userId } = cartItem;
-    
-    const sql = `select cid from cart
+  const { pid, size, userId } = cartItem;
+
+  const sql = `select cid from cart
 	                where pid = ? and id = ? and size = ?;`;
-    const [rows] = await pool.execute(sql, [pid, userId, size]);
-    return rows[0];
+  const [rows] = await pool.execute(sql, [pid, userId, size]);
+  return rows[0];
 };

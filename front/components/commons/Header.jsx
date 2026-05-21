@@ -14,6 +14,7 @@ export default function Header() {
   const authChecked = useAuthStore((s) => s.authChecked);
   const cartCount = useAuthStore((s) => s.cartCount);
   const initCartCount = useAuthStore((s) => s.initCartCount);
+  const isUpdateFlag = useAuthStore((s) => s.isUpdateFlag);
 
   useEffect(() => {
     //cart DB 연동!!
@@ -23,7 +24,7 @@ export default function Header() {
       result.qty ? initCartCount(parseInt(result.qty)) : initCartCount(0);
     }
     fetchData();
-  }, [isLogin])
+  }, [isLogin, isUpdateFlag])
 
   const handleLogout = () => {
     logout();
