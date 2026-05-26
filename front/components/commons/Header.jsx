@@ -47,7 +47,7 @@ export default function Header() {
             <GiShoppingCart className="header-icons" />
             <span className="header-icons-cart">{cartCount}</span>
           </Link>
-          {!authChecked && !isLogin && (
+          {authChecked && !isLogin && (
             <Link to="/login"><button type="button">Login</button></Link>
           )}
           {authChecked && isLogin && (

@@ -20,7 +20,7 @@ export const useAuthStore = create((set) => ({
       role: null,
       accessToken: null,
       isLogin: false,
-      authChecked: false,
+      authChecked: true,
       cartCount: 0,
       cartItems: [],
     }),
