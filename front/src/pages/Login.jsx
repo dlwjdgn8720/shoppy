@@ -26,13 +26,13 @@ export default function Login() {
 
     // JSON 모드: 간단 로그인 시뮬레이션 (id/pwd 모두 입력 시 성공)
     const result = await axiosPost('/member/login', formData);
-    
-    if(result.isLogin){
+
+    if (result.isLogin) {
       //로그인 인증 관리 => 전역 객체 리덕스에 등록
-      login({ userId: formData.id, accessToken: result.token, role: result.role, isLogin: result.isLogin });
+      login({ userId: formData.id, accessToken: result.accessToken, role: result.role, isLogin: result.isLogin });
       alert('로그인에 성공하셨습니다.');
       navigate('/');
-    }else{
+    } else {
       alert('로그인에 실패하셨습니다.');
     }
 

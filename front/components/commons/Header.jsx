@@ -26,10 +26,11 @@ export default function Header() {
     fetchData();
   }, [isLogin, isUpdateFlag])
 
-  const handleLogout = () => {
-    logout();
-    alert('로그아웃 되었습니다');
-    navigate('/');
+  const handleLogout = async () => {
+    await axiosPost("/member/logout"); // ← 서버에 쿠키 삭제 요청
+    logout(); // ← Zustand 상태 초기화
+    alert("로그아웃 되었습니다");
+    navigate("/");
   };
 
   return (
@@ -46,7 +47,7 @@ export default function Header() {
             <GiShoppingCart className="header-icons" />
             <span className="header-icons-cart">{cartCount}</span>
           </Link>
-          {authChecked && !isLogin && (
+          {!authChecked && !isLogin && (
             <Link to="/login"><button type="button">Login</button></Link>
           )}
           {authChecked && isLogin && (

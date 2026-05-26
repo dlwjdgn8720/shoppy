@@ -5,7 +5,7 @@ export const useAuthStore = create((set) => ({
   role: null,
   accessToken: null,
   isLogin: false,
-  authChecked: true, // DB 없으므로 즉시 true
+  authChecked: false, // DB 연동이므로 초기값을 false로 변경
   cartCount: 0,
   cartItems: [], // 로컬 장바구니 아이템 목록
   cartList: [], //장바구니 리스트 공유 - Cart, Checkout 컴포넌트
@@ -20,7 +20,7 @@ export const useAuthStore = create((set) => ({
       role: null,
       accessToken: null,
       isLogin: false,
-      authChecked: true,
+      authChecked: false,
       cartCount: 0,
       cartItems: [],
     }),
